@@ -76,9 +76,7 @@ def home(request):
     reminders = None
     if request.user.is_authenticated:
         reminders = Reminder.objects.filter(user=request.user)
-        with open('base/log.txt', 'a') as log_file:
-            for reminder in reminders:
-                log_file.write(f"Reminder: {reminder.user}, Accessed on: {datetime.datetime.now()}\n")
+
     context = {'reminders': reminders}
     return render(request, 'base/home.html', context)
 
