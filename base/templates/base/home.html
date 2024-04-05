@@ -12,6 +12,167 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      :root {
+        --primary-color: #4caf50;
+        --secondary-color: #302c3c;
+        --text-color: #333;
+        --bg-color: #f7f7f7;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--secondary-color);
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: var(--bg-color);
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      header nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+
+      header .logo a {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--bg-color);
+        text-decoration: none;
+      }
+
+      header .nav-links {
+        display: flex;
+        align-items: center;
+      }
+
+      header .nav-links p,
+      header .nav-links a {
+        font-size: 1.2rem;
+        color: var(--bg-color);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+      }
+
+      header .nav-links p a {
+        border-bottom: 2px solid var(--bg-color);
+      }
+
+      header .nav-links p a:hover,
+      header .nav-links a:hover {
+        color: var(--secondary-color);
+        background-color: var(--bg-color);
+      }
+
+      header .toggle-menu {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      main {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: var(--bg-color);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      main h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      main ul {
+        list-style-type: none;
+        padding-top: 5px;
+      }
+
+      main li {
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      main li:last-child {
+        border-bottom: none;
+      }
+
+      main p {
+        font-size: 1.2rem;
+        text-align: center;
+        color: var(--text-color);
+      }
+
+      a[href="{% url 'newreminder' %}"] {
+        background-color: var(--primary-color);
+        color: var(--bg-color);
+        padding: 0.7rem 1.5rem;
+        text-decoration: none;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      a[href="{% url 'newreminder' %}"]:hover {
+        background-color: #45a049;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        header nav {
+          width: 100%;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        header .nav-links {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-top: 1rem;
+          display: none;
+        }
+
+        header .nav-links.show {
+          display: flex;
+        }
+
+        header .nav-links p,
+        header .nav-links a {
+          margin-bottom: 0.5rem;
+        }
+
+        header .toggle-menu {
+          display: block;
+          margin-top: 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -44,190 +205,21 @@
       </ul>
       {% else %}
       <p>You have no reminders yet.</p>
-      {% endif %} {% else %} {% endif %}
+      {% endif %} {% else %}
+      <p>
+        You are not logged in. Please <a href="{% url 'login' %}">log in</a> to
+        view your reminders.
+      </p>
+      {% endif %}
     </main>
+    <script>
+      const toggleMenu = document.querySelector(".toggle-menu");
+      const navLinks = document.querySelector(".nav-links");
+
+      toggleMenu.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+      });
+    </script>
   </body>
 </html>
-<style>
-  /* Import a modern font */
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-  a[href="{% url 'newreminder' %}"] {
-    background-color: #4caf50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 2px 2px;
-    cursor: pointer;
-    transition-duration: 0.4s;
-  }
-
-  a[href="{% url 'newreminder' %}"]:hover {
-    background-color: #45a049;
-  }
-
-  /* Reset some default styles */
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Set up some base styles */
-  body {
-    font-family: "Poppins", sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #302c3c;
-  }
-
-  /* Style the header */
-  header {
-    background-color: gray;
-    color: #fff;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  header .logo a {
-    font-size: 2rem;
-    font-weight: 600;
-    color: #fff;
-    text-decoration: none;
-  }
-
-  header .nav-links {
-    display: flex;
-    align-items: center;
-  }
-
-  header .nav-links p {
-    font-size: 1.2rem;
-    margin-right: 1rem;
-  }
-
-  header .nav-links p a {
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 2px solid #fff;
-    transition: all 0.3s ease;
-  }
-
-  header .nav-links p a:hover {
-    color: #f7f7f7;
-    border-bottom-color: #f7f7f7;
-  }
-
-  header .nav-links a {
-    font-size: 1.2rem;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-  }
-
-  header .nav-links a:hover {
-    background-color: #fff;
-    color: #333;
-  }
-
-  header .toggle-menu {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  /* Style the main content */
-  main {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-  }
-
-  main h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  main ul {
-    list-style-type: none;
-    padding-top: 5px;
-  }
-
-  main li {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  main li:last-child {
-    border-bottom: none;
-  }
-
-  main p {
-    font-size: 1.2rem;
-    text-align: center;
-  }
-
-  /* Media queries for responsive design */
-  @media (max-width: 768px) {
-    header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    header nav {
-      width: 100%;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    header .nav-links {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-top: 1rem;
-      display: none;
-    }
-
-    header .nav-links.show {
-      display: flex;
-    }
-
-    header .nav-links p,
-    header .nav-links a {
-      margin-bottom: 0.5rem;
-    }
-
-    header .toggle-menu {
-      display: block;
-      margin-top: 1rem;
-    }
-  }
-</style>
-<script>
-  const toggleMenu = document.querySelector(".toggle-menu");
-  const navLinks = document.querySelector(".nav-links");
-
-  toggleMenu.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
-</script>
 {% endblock content %}
